@@ -1,0 +1,86 @@
+{% extends 'base-default.html.twig' %}
+
+{% block title %}Horaires{% endblock %}
+
+{% block body %}
+
+    {% set trans_day_hash = { 
+        "Jan": "Janvier", 
+        "Feb": "Fevrier", 
+        "Mar": "Mars", 
+        "Apr": "Avril", 
+        "May": "Mai", 
+        "Jun": "Juin", 
+        "Jul": "Juillet",
+        "Aug": "Août",
+        "Sep": "Septembre",
+        "Oct": "Octobre",
+        "Nov": "Novembre",
+        "Dec": "Decembre"
+    } 
+    %}
+
+    <div class="example-wrapper">
+        <h1 class="h2 text-center mt-4 mb-4">Reservations - Horaires</h1>
+        <div class="container">
+        
+            {# ligne : fleche gauche + mois année + fleche droite #}
+            <div class="row">
+
+                {# ------------------------------------------debut : fleche gauche----------------------------------------------- #}
+                <div class="col-1">
+                    {% if page_number > 0 %}
+                        {% set page_nbr = page_number - 1 %}
+                        <a href="{{path('app_home', {page_number: page_nbr})}}">
+                            <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd"><path d="M20 .755l-14.374 11.245 14.374 11.219-.619.781-15.381-12 15.391-12 .609.755z"/></svg>
+                        </a>
+                    {% endif %}
+                </div>
+                {# ------------------------------------------fin : fleche gauche-------------------------------------------------- #}
+
+                {# ---------------------------------------------debut : mois année ------------------------------------------------#}
+                <div class="col-10">
+                    <h2 class="text-center mb-4">{{ trans_day_hash[days|first['date']|date('M')] }} {{days|first['date']|date('Y')}}</h2>
+                </div>
+                {# ---------------------------------------------fin : mois année ------------------------------------------------#}
+
+                {# --------------------------------------------debut : fleche droite---------------------------------------------------- #}
+                <div class="col-1">
+                    {% set page_nbr = page_number + 1 %}
+                    <a href="{{path('app_home', {page_number: page_nbr})}}">
+                        <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd"><path d="M4 .755l14.374 11.245-14.374 11.219.619.781 15.381-12-15.391-12-.609.755z"/></svg>
+                    </a>
+                </div>
+                {# --------------------------------------------fin : fleche droite---------------------------------------------------- #}
+
+            </div>
+
+            {# ligne : jour + date mois #}
+            <div class="row">
+                
+                {# jour du lundi au vendredi #}
+                {% for day in days %}
+                <div class="col">
+                    {# date + mois #}
+                    <h3 class="text-center">{{day['day'] }} <br>{{day['date']|date('d')  }} </h3>
+                   {# {{trans_day_hash[day['date']|date('M')]}} #}
+
+                    {# creneaux horaires #}
+                    {% for time_slot in day['time_slots'] %}
+                    <a href="{{path('app_booking', {time_slot: day['date']|date('Y-m-d') ~ ' ' ~ time_slot })}}" style="text-decoration: inherit; color: inherit;">
+                        <div class="card mb-1">
+                            <div class="card-body">
+                                <p class="text-center text-bold h5">{{time_slot}}</p>
+                            </div>
+                        </div>
+                    </a>
+                    {% endfor %}
+
+                </div>
+                {% endfor %}
+            </div>
+
+        </div>
+    </div>
+
+{% endblock %}

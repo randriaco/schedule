@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}MultiDayClosing index{% endblock %}
+
+{% block body %}
+<div class="container">
+    <table class="table table-borderless">
+        <thead>
+            <tr>
+                <th>Début de fermeture</th>
+                <th>Fin de fermeture</th>
+                <th>Motif</th>
+                <th>Valider</th>
+                <th>Supprimer</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{ form_start(new_form) }}
+            <tr>
+                <td>{{ form_row(new_form.beginClosing) }}</td>
+                <td>{{ form_row(new_form.finisgClosing) }}</td>
+                <td>{{ form_row(new_form.pattern) }}</td>
+                <td>
+                    <button class="btn btn-primary">Valider</button>
+                </td>
+                <td></td>
+            </tr>
+            {{ form_end(new_form) }}
+            {% for multi_day_closing_form in multi_day_closing_forms %}
+            {{ form_start(multi_day_closing_form) }}
+            <tr>
+                <td>{{ form_row(multi_day_closing_form.beginClosing) }}</td>
+                <td>{{ form_row(multi_day_closing_form.finisgClosing) }}</td>
+                <td>{{ form_row(multi_day_closing_form.pattern) }}</td>
+                <td>
+                    <button class="btn btn-success">Modifier</button>
+                </td>
+                {{ form_end(multi_day_closing_form) }}
+                <td>
+                    <form method="post" action="{{ path('app_multi_day_closing_delete', {'id': multi_day_closing_form.vars['data'].id}) }}"
+                        onsubmit="return confirm('Are you sure you want to delete this item?');">
+                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ multi_day_closing_form.vars['data'].id) }}">
+                        <button class="btn btn-danger">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

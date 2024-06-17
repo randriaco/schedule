@@ -1,0 +1,22 @@
+{% extends 'base-default.html.twig' %}
+
+{% block title %}Bienvenue!{% endblock %}
+
+{% block body %}
+<div class="example-wrapper">
+    <h1 class="h2 text-center mt-4 mb-4">Résérvé avec success!</h1>
+    <div class="container">
+        <p>Vous avez choisi :</p>
+        <table class="table">
+            <thead>
+                <th>Date</th>
+                <th>Heure</th>
+            </thead>
+            <tbody>
+                <td>{{booking.timeBooked|date('d/m/Y')}} </td>
+                <td>{{booking.timeBooked|date('H:i')}} </td>
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

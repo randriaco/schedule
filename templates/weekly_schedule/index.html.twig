@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}WeeklySchedule index{% endblock %}
+
+{% block body %}
+
+    {# --------------------------------------------formulaire horaires hebdomadaires--------------------------------------- #}
+    {{ form_start(form) }}
+    <table class="table table-bordered">
+        <thead>
+            <th>Jours</th>
+            <th>Ouverture Matin</th>
+            <th>Fermeture Matin</th>
+            <th>Ouverture Soir</th>
+            <th>Fermeture Soir</th>
+        </thead>
+        <tbody>
+            {% for weekly_schedule in weekly_schedules %}
+            <tr>
+                <th>{{weekly_schedule.day}}</th>
+                <td>{{ form_row(form['morningOpening'~weekly_schedule.id]) }}</td>
+                <td>{{ form_row(form['morningClosing'~weekly_schedule.id]) }}</td>
+                <td>{{ form_row(form['eveningOpening'~weekly_schedule.id]) }}</td>
+                <td>{{ form_row(form['eveningClosing'~weekly_schedule.id]) }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div class="d-flex justify-content-end">
+        <button class="btn btn-primary">Modifier</button>
+    </div>
+    {{ form_end(form) }}
+
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends 'base-default.html.twig' %}
+
+{% block title %}Restaurants{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1>Liste des restaurants</h1>
+        <div class="row">
+            {% for restaurant in restaurants %}
+                <div class="col-md-6 mb-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ restaurant.nom }}</h5>
+                            <p class="card-text">{{ restaurant.adresse }}</p>
+                            <p class="card-text">{{ restaurant.ville }}</p>
+                            <p class="card-text">{{ restaurant.specialite }}</p>
+                            <a href="#" class="btn btn-primary">Réserver</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
